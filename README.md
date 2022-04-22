@@ -1,3 +1,9 @@
+# ECC-Messaging-Demo
+
+[![CircleCI](https://circleci.com/gh/ECC-Messaging/ECC-Messaging-Front-end/tree/main.svg?style=svg&circle-token=28ac3f292cd28eb05d94536c9d48554e7a03ac74)](https://circleci.com/gh/ECC-Messaging/ECC-Messaging-Front-end/tree/main)
+
+Demo showcasing an ecc messaging scheme between a server and client.
+
 ## Get started
 
 Install the dependencies...
