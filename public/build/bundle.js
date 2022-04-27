@@ -3278,7 +3278,7 @@ var app = (function (crypto) {
     			p = element("p");
     			t = text(t_value);
     			set_style(p, "color", "red");
-    			add_location(p, file, 35, 2, 875);
+    			add_location(p, file, 35, 2, 885);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -3307,7 +3307,7 @@ var app = (function (crypto) {
     function create_then_block(ctx) {
     	let each_1_anchor;
     	let current;
-    	let each_value = /*posts*/ ctx[0];
+    	let each_value = /*posts*/ ctx[0].reverse();
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -3337,7 +3337,7 @@ var app = (function (crypto) {
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*posts*/ 1) {
-    				each_value = /*posts*/ ctx[0];
+    				each_value = /*posts*/ ctx[0].reverse();
     				validate_each_argument(each_value);
     				let i;
 
@@ -3399,7 +3399,7 @@ var app = (function (crypto) {
     	return block;
     }
 
-    // (32:2) {#each posts as post}
+    // (32:2) {#each posts.reverse() as post}
     function create_each_block(ctx) {
     	let post;
     	let current;
@@ -3444,7 +3444,7 @@ var app = (function (crypto) {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(32:2) {#each posts as post}",
+    		source: "(32:2) {#each posts.reverse() as post}",
     		ctx
     	});
 

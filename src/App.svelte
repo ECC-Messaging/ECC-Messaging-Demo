@@ -35,7 +35,7 @@
 	{#await promise}
 		<Spinner/>
 	{:then}
-		{#each posts as post}
+		{#each posts.reverse() as post}
 			<Post message={post.message} time={post.timestamp}/>
 		{/each}
 	{:catch error}
