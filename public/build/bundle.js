@@ -1854,12 +1854,15 @@ var app = (function (crypto) {
             //ALTERNATE OPTION
             // localStorage.setItem("lastname", "Smith");
             // console.log(localStorage.getItem("lastname"));
-            if (js_cookie_1.default.get("privateKey_" + this.name) == undefined) {
-                js_cookie_1.default.set("privateKey_" + this.name, this.privateKey, { expires: 365 });
+            if (js_cookie_1.default.get("privateKey_" + this.name) === undefined) {
+                console.log("no cookie");
+                js_cookie_1.default.set("privateKey_" + this.name, this.privateKey);
+            } else {
+                console.log("cookie");
             }
         }
         loadPublicKey() {
-            if (js_cookie_1.default.get("privateKey_" + this.name) == undefined) {
+            if (js_cookie_1.default.get("privateKey_" + this.name) === undefined) {
                 this.generatePrivateKey();
             }
             else {
