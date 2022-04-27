@@ -3013,8 +3013,8 @@ var app = (function (crypto) {
     			button.textContent = "Post Message";
     			attr_dev(input, "placeholder", "enter your message");
     			set_style(input, "width", "588px");
-    			add_location(input, file$2, 31, 0, 852);
-    			add_location(button, file$2, 32, 0, 937);
+    			add_location(input, file$2, 33, 0, 916);
+    			add_location(button, file$2, 34, 0, 1001);
     		},
     		l: function claim(nodes) {
     			throw new Error_1$1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3071,7 +3071,9 @@ var app = (function (crypto) {
     	});
 
     	if (res.ok) {
-    		throw new Error();
+    		location.reload(true);
+    	} else {
+    		throw new Error("Whoops, something went wrong with your post!");
     	}
     }
 
@@ -3086,7 +3088,6 @@ var app = (function (crypto) {
     	async function handlePost() {
     		let encryptedMessage = ecc1.encrypt(message);
     		await updateBasket(encryptedMessage);
-    		window.location.reload();
     	}
 
     	const writable_props = [];

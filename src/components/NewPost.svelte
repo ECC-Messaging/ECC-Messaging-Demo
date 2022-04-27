@@ -25,8 +25,10 @@
 				}
 			});
 		if (res.ok) {
-			throw new Error();
-		}
+			location.reload(true);
+		} else {
+            throw new Error("Whoops, something went wrong with your post!");
+        }
 	}
 	
 
@@ -34,7 +36,6 @@
         let encryptedMessage = ecc1.encrypt(message);
 
         await updateBasket(encryptedMessage);
-        window.location.reload();
 	}
 </script>
 
