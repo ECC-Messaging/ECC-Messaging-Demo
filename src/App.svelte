@@ -1,7 +1,6 @@
 <script lang="ts">
-import { get } from "svelte/store";
-
 	import Post from "./components/Post.svelte";
+	import NewPost from "./components/NewPost.svelte";
 	import Spinner from "./components/Spinner.svelte";
 	let posts = [];
 
@@ -17,8 +16,8 @@ import { get } from "svelte/store";
 		const json = await res.json();
 		if (res.ok) {
 			setTimeout(() => {
-				posts = json;			
-				
+				posts = json.posts;
+
 				return true;
 			}, 0 * Math.random())
 		} else {
@@ -29,13 +28,21 @@ import { get } from "svelte/store";
 	let promise = getBasket();
 </script>
 
-{#await promise}
-	<Spinner/>
-{:then basket}
-	<p>{basket}</p>
-	<!-- {#each posts as post}
-		<Post message={post.message} time={post.timestamp}/>
-	{/each} -->
-{:catch error}
-	<p style="color: red">{error}</p>
-{/await}
+<main>
+	<NewPost />
+
+	{#await promise}
+		<Spinner/>
+	{:then}
+		{#each posts as post}
+			<Post message={post.message} time={post.timestamp}/>
+		{/each}
+	{:catch error}
+		<p style="color: red">{error}</p>
+	{/await}
+</main>
+
+
+<style>
+
+</style>

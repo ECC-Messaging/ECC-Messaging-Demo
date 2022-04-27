@@ -1,6 +1,6 @@
 <script lang="ts">
     import { now } from "svelte/internal";
-	const ecc = require('ecc-messaging-scheme-package');
+	import  { ECCM } from 'ecc-messaging-scheme-package';
     let message = '';
 
     async function updateBasket(message: string) {				
@@ -23,8 +23,8 @@
 	
 
     async function handlePost() {
-        ecc.generateSharedKey(process.env.ECC_PRIVATE_KEY);
-        let encryptedMessage = ecc.encyrpt(message);
+        ECCM.generateSharedKey(process.env.ECC_PRIVATE_KEY);
+        let encryptedMessage = ECCM.encyrpt(message);
 
         await updateBasket(encryptedMessage);
 	}
