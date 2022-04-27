@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { now } from "svelte/internal";
 	import ECCM from 'ecc-messaging-scheme-package';
 
 	let ecc1 = new ECCM("1");
@@ -17,7 +16,7 @@
                     posts: [
                         {
                             message: message,
-                            timestamp: now()
+                            timestamp: Date.now()
                         }
                     ]
                 }),
@@ -25,7 +24,7 @@
 					'Content-Type': 'application/json'
 				}
 			});
-		if (!res.ok) {
+		if (res.ok) {
 			throw new Error();
 		}
 	}
@@ -35,10 +34,11 @@
         let encryptedMessage = ecc1.encrypt(message);
 
         await updateBasket(encryptedMessage);
+        window.location.reload();
 	}
 </script>
 
-<textarea bind:value={message} placeholder="enter your message" style="width: 600px;"/>
+<input bind:value={message} placeholder="enter your message" style="width: 588px;"/>
 <button on:click|once={handlePost}>
     Post Message
 </button>

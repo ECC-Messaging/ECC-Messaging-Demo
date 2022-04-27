@@ -55,11 +55,6 @@ var app = (function (crypto) {
                 rest[k] = props[k];
         return rest;
     }
-
-    const is_client = typeof window !== 'undefined';
-    let now = is_client
-        ? () => window.performance.now()
-        : () => Date.now();
     function append(target, node) {
         target.appendChild(node);
     }
@@ -1854,15 +1849,12 @@ var app = (function (crypto) {
             //ALTERNATE OPTION
             // localStorage.setItem("lastname", "Smith");
             // console.log(localStorage.getItem("lastname"));
-            if (js_cookie_1.default.get("privateKey_" + this.name) === undefined) {
-                console.log("no cookie");
-                js_cookie_1.default.set("privateKey_" + this.name, this.privateKey);
-            } else {
-                console.log("cookie");
+            if (js_cookie_1.default.get("privateKey_" + this.name) == undefined) {
+                js_cookie_1.default.set("privateKey_" + this.name, this.privateKey, { expires: 365 });
             }
         }
         loadPublicKey() {
-            if (js_cookie_1.default.get("privateKey_" + this.name) === undefined) {
+            if (js_cookie_1.default.get("privateKey_" + this.name) == undefined) {
                 this.generatePrivateKey();
             }
             else {
@@ -2827,13 +2819,10 @@ var app = (function (crypto) {
         return [secp256k1, g];
     }
     class ECCM {
-        C;
-        g;
         ECC;
         constructor(id) {
-            [this.C, this.g] = initializePublicEnv();
-            this.ECC = new ECC.ECCInstance(this.C, this.g, id);
-            this.ECC.clearKeys();
+            let [C, g] = initializePublicEnv();
+            this.ECC = new ECC.ECCInstance(C, g, id);
         }
         generateSharedKey(recipient) {
             this.ECC.generateSharedKey(recipient.getPublicKey());
@@ -2853,10 +2842,9 @@ var app = (function (crypto) {
     const file$3 = "src/components/Post.svelte";
 
     function create_fragment$3(ctx) {
-    	let article;
+    	let blockquote;
     	let h4;
     	let t1;
-    	let div;
     	let time_1;
     	let current;
 
@@ -2870,28 +2858,22 @@ var app = (function (crypto) {
 
     	const block = {
     		c: function create() {
-    			article = element("article");
+    			blockquote = element("blockquote");
     			h4 = element("h4");
     			h4.textContent = `${/*decryptedMessage*/ ctx[1]}`;
     			t1 = space();
-    			div = element("div");
     			create_component(time_1.$$.fragment);
-    			attr_dev(h4, "class", "post-body svelte-1o2spk2");
-    			add_location(h4, file$3, 11, 1, 313);
-    			attr_dev(div, "class", "post-footer svelte-1o2spk2");
-    			add_location(div, file$3, 12, 4, 363);
-    			attr_dev(article, "class", "post-container svelte-1o2spk2");
-    			add_location(article, file$3, 10, 0, 279);
+    			add_location(h4, file$3, 11, 1, 293);
+    			add_location(blockquote, file$3, 10, 0, 279);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, article, anchor);
-    			append_dev(article, h4);
-    			append_dev(article, t1);
-    			append_dev(article, div);
-    			mount_component(time_1, div, null);
+    			insert_dev(target, blockquote, anchor);
+    			append_dev(blockquote, h4);
+    			append_dev(blockquote, t1);
+    			mount_component(time_1, blockquote, null);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -2909,7 +2891,7 @@ var app = (function (crypto) {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(article);
+    			if (detaching) detach_dev(blockquote);
     			destroy_component(time_1);
     		}
     	};
@@ -3017,7 +2999,7 @@ var app = (function (crypto) {
     const file$2 = "src/components/NewPost.svelte";
 
     function create_fragment$2(ctx) {
-    	let textarea;
+    	let input;
     	let t0;
     	let button;
     	let mounted;
@@ -3025,27 +3007,27 @@ var app = (function (crypto) {
 
     	const block = {
     		c: function create() {
-    			textarea = element("textarea");
+    			input = element("input");
     			t0 = space();
     			button = element("button");
     			button.textContent = "Post Message";
-    			attr_dev(textarea, "placeholder", "enter your message");
-    			set_style(textarea, "width", "600px");
-    			add_location(textarea, file$2, 31, 0, 857);
-    			add_location(button, file$2, 32, 0, 945);
+    			attr_dev(input, "placeholder", "enter your message");
+    			set_style(input, "width", "588px");
+    			add_location(input, file$2, 31, 0, 852);
+    			add_location(button, file$2, 32, 0, 937);
     		},
     		l: function claim(nodes) {
     			throw new Error_1$1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, textarea, anchor);
-    			set_input_value(textarea, /*message*/ ctx[0]);
+    			insert_dev(target, input, anchor);
+    			set_input_value(input, /*message*/ ctx[0]);
     			insert_dev(target, t0, anchor);
     			insert_dev(target, button, anchor);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[2]),
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[2]),
     					listen_dev(button, "click", /*handlePost*/ ctx[1], { once: true }, false, false)
     				];
 
@@ -3053,14 +3035,14 @@ var app = (function (crypto) {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*message*/ 1) {
-    				set_input_value(textarea, /*message*/ ctx[0]);
+    			if (dirty & /*message*/ 1 && input.value !== /*message*/ ctx[0]) {
+    				set_input_value(input, /*message*/ ctx[0]);
     			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(textarea);
+    			if (detaching) detach_dev(input);
     			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(button);
     			mounted = false;
@@ -3079,6 +3061,20 @@ var app = (function (crypto) {
     	return block;
     }
 
+    async function updateBasket(message) {
+    	const res = await fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/messages`, {
+    		method: 'PUT',
+    		body: JSON.stringify({
+    			posts: [{ message, timestamp: Date.now() }]
+    		}),
+    		headers: { 'Content-Type': 'application/json' }
+    	});
+
+    	if (res.ok) {
+    		throw new Error();
+    	}
+    }
+
     function instance$2($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('NewPost', slots, []);
@@ -3087,21 +3083,10 @@ var app = (function (crypto) {
     	ecc1.generateSharedKey(ecc2.ECC);
     	let message = '';
 
-    	async function updateBasket(message) {
-    		const res = await fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/messages`, {
-    			method: 'PUT',
-    			body: JSON.stringify({ posts: [{ message, timestamp: now() }] }),
-    			headers: { 'Content-Type': 'application/json' }
-    		});
-
-    		if (!res.ok) {
-    			throw new Error();
-    		}
-    	}
-
     	async function handlePost() {
     		let encryptedMessage = ecc1.encrypt(message);
     		await updateBasket(encryptedMessage);
+    		window.location.reload();
     	}
 
     	const writable_props = [];
@@ -3110,13 +3095,12 @@ var app = (function (crypto) {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<NewPost> was created with unknown prop '${key}'`);
     	});
 
-    	function textarea_input_handler() {
+    	function input_input_handler() {
     		message = this.value;
     		$$invalidate(0, message);
     	}
 
     	$$self.$capture_state = () => ({
-    		now,
     		ECCM: _default,
     		ecc1,
     		ecc2,
@@ -3135,7 +3119,7 @@ var app = (function (crypto) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [message, handlePost, textarea_input_handler];
+    	return [message, handlePost, input_input_handler];
     }
 
     class NewPost extends SvelteComponentDev {
