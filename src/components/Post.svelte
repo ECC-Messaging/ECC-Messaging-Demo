@@ -3,14 +3,12 @@
 
 	export let message: string;
     export let time: string;
-    export let id: number;
 </script>
 
 <article class="post-container">
 	<h4 class="post-body">{message}</h4>
     <div class="post-footer">
         <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
-        <p>{id}</p>
     </div>
 </article>
 
