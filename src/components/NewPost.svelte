@@ -39,7 +39,7 @@
 	}
 </script>
 
-<input bind:value={message} placeholder="enter your message" style="width: 588px;"/>
+<input bind:value={message} placeholder="enter your message" style="height: 50px; width: 588px;"/>
 <button on:click|once={handlePost}>
     Post Message
 </button>

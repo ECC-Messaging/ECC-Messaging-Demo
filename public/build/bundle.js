@@ -3012,9 +3012,10 @@ var app = (function (crypto) {
     			button = element("button");
     			button.textContent = "Post Message";
     			attr_dev(input, "placeholder", "enter your message");
+    			set_style(input, "height", "50px");
     			set_style(input, "width", "588px");
     			add_location(input, file$2, 33, 0, 916);
-    			add_location(button, file$2, 34, 0, 1001);
+    			add_location(button, file$2, 34, 0, 1015);
     		},
     		l: function claim(nodes) {
     			throw new Error_1$1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
