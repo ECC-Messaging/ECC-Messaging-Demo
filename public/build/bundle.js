@@ -2852,7 +2852,6 @@ var app = (function (crypto) {
     function create_fragment$3(ctx) {
     	let article;
     	let h4;
-    	let t0;
     	let t1;
     	let div;
     	let time_1;
@@ -2860,7 +2859,7 @@ var app = (function (crypto) {
 
     	time_1 = new Time({
     			props: {
-    				timestamp: /*time*/ ctx[1],
+    				timestamp: /*time*/ ctx[0],
     				format: "MMMM D, YYYY @ h:mm a"
     			},
     			$$inline: true
@@ -2870,14 +2869,14 @@ var app = (function (crypto) {
     		c: function create() {
     			article = element("article");
     			h4 = element("h4");
-    			t0 = text(/*message*/ ctx[0]);
+    			h4.textContent = `${/*decryptedMessage*/ ctx[1]}`;
     			t1 = space();
     			div = element("div");
     			create_component(time_1.$$.fragment);
     			attr_dev(h4, "class", "post-body svelte-1o2spk2");
     			add_location(h4, file$3, 11, 1, 313);
     			attr_dev(div, "class", "post-footer svelte-1o2spk2");
-    			add_location(div, file$3, 12, 4, 354);
+    			add_location(div, file$3, 12, 4, 363);
     			attr_dev(article, "class", "post-container svelte-1o2spk2");
     			add_location(article, file$3, 10, 0, 279);
     		},
@@ -2887,16 +2886,14 @@ var app = (function (crypto) {
     		m: function mount(target, anchor) {
     			insert_dev(target, article, anchor);
     			append_dev(article, h4);
-    			append_dev(h4, t0);
     			append_dev(article, t1);
     			append_dev(article, div);
     			mount_component(time_1, div, null);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (!current || dirty & /*message*/ 1) set_data_dev(t0, /*message*/ ctx[0]);
     			const time_1_changes = {};
-    			if (dirty & /*time*/ 2) time_1_changes.timestamp = /*time*/ ctx[1];
+    			if (dirty & /*time*/ 1) time_1_changes.timestamp = /*time*/ ctx[0];
     			time_1.$set(time_1_changes);
     		},
     		i: function intro(local) {
@@ -2941,8 +2938,8 @@ var app = (function (crypto) {
     	});
 
     	$$self.$$set = $$props => {
-    		if ('message' in $$props) $$invalidate(0, message = $$props.message);
-    		if ('time' in $$props) $$invalidate(1, time = $$props.time);
+    		if ('message' in $$props) $$invalidate(2, message = $$props.message);
+    		if ('time' in $$props) $$invalidate(0, time = $$props.time);
     	};
 
     	$$self.$capture_state = () => ({
@@ -2956,24 +2953,24 @@ var app = (function (crypto) {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('message' in $$props) $$invalidate(0, message = $$props.message);
-    		if ('time' in $$props) $$invalidate(1, time = $$props.time);
+    		if ('message' in $$props) $$invalidate(2, message = $$props.message);
+    		if ('time' in $$props) $$invalidate(0, time = $$props.time);
     		if ('ecc1' in $$props) ecc1 = $$props.ecc1;
     		if ('ecc2' in $$props) ecc2 = $$props.ecc2;
-    		if ('decryptedMessage' in $$props) decryptedMessage = $$props.decryptedMessage;
+    		if ('decryptedMessage' in $$props) $$invalidate(1, decryptedMessage = $$props.decryptedMessage);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [message, time];
+    	return [time, decryptedMessage, message];
     }
 
     class Post extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$3, create_fragment$3, safe_not_equal, { message: 0, time: 1 });
+    		init(this, options, instance$3, create_fragment$3, safe_not_equal, { message: 2, time: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -2985,11 +2982,11 @@ var app = (function (crypto) {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*message*/ ctx[0] === undefined && !('message' in props)) {
+    		if (/*message*/ ctx[2] === undefined && !('message' in props)) {
     			console.warn("<Post> was created without expected prop 'message'");
     		}
 
-    		if (/*time*/ ctx[1] === undefined && !('time' in props)) {
+    		if (/*time*/ ctx[0] === undefined && !('time' in props)) {
     			console.warn("<Post> was created without expected prop 'time'");
     		}
     	}

@@ -13,7 +13,7 @@
 </script>
 
 <article class="post-container">
-	<h4 class="post-body">{message}</h4>
+	<h4 class="post-body">{decryptedMessage}</h4>
     <div class="post-footer">
         <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
     </div>
