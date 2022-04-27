@@ -1,7 +1,11 @@
 <script lang="ts">
     import { now } from "svelte/internal";
 	import ECCM from 'ecc-messaging-scheme-package';
-	
+
+	let ecc1 = new ECCM("1");
+	let ecc2 = new ECCM("2");
+	ecc1.generateSharedKey(ecc2.ECC);
+
     let message = '';
 
     async function updateBasket(message: string) {				
@@ -9,9 +13,13 @@
         fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/messages`, 
 			{
 				method: 'PUT',
-                body: JSON.stringify({
-                    message: message,
-                    timestamp: now()
+                body: JSON.stringify({ 
+                    posts: [
+                        {
+                            message: message,
+                            timestamp: now()
+                        }
+                    ]
                 }),
 				headers: {
 					'Content-Type': 'application/json'
@@ -24,17 +32,13 @@
 	
 
     async function handlePost() {
-        let ecc1 = new ECCM("1"); 
-        let ecc2 = new ECCM("2"); 
-        ecc1.generateSharedKey(ecc2.ECC);
-
         let encryptedMessage = ecc1.encrypt(message);
 
         await updateBasket(encryptedMessage);
 	}
 </script>
 
-<input bind:value={message} placeholder="enter your message">
+<textarea bind:value={message} placeholder="enter your message" style="width: 600px;"/>
 <button on:click|once={handlePost}>
     Post Message
 </button>

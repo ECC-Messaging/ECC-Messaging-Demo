@@ -2,6 +2,7 @@
 	import Post from "./components/Post.svelte";
 	import NewPost from "./components/NewPost.svelte";
 	import Spinner from "./components/Spinner.svelte";
+	
 	let posts = [];
 
 	async function getBasket() {				
