@@ -8,7 +8,7 @@
     export let time: string;
     export let postOwnerID: string;
     const key = async () => {return await serverKey.get();  }
-
+    const userObject = async () => {return await user.get();  }
 
 
     const friendRes =async () => { const result = await
@@ -30,7 +30,6 @@
 
 
     async function decryptMessage() {
-        const userObject = await user.get();
 
         if (userObject) {
             if (userObject.uuid === postOwnerID) {
