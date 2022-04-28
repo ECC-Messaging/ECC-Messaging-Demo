@@ -15,7 +15,7 @@
                         {
                             message: message,
                             timestamp: Date.now(),
-                            ownerID: uuid
+                            ownerID: Cookies.get("uuid_ecc")
                         }
                     ]
                 }),
