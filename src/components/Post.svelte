@@ -11,7 +11,7 @@
     const userObject = async () => {return await user.get();  }
 
 
-    const friendRes =async () => { const result = await
+    const friendRes = async () => { const result = await
       fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
       {
         method: 'GET',
@@ -22,18 +22,12 @@
       return await result.json();
     }
 
-
-
-
     let postEncrypted = true;
-
-
 
     async function decryptMessage() {
 
         if (userObject) {
             if (userObject.uuid === postOwnerID) {
-
 
                 const uuidECC = new ECCM(userObject.uuid);
                 uuidECC.generateSharedKey(key);
