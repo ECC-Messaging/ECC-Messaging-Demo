@@ -1,22 +1,21 @@
 <script lang="ts">
 	import ECCM from 'ecc-messaging-scheme-package';
-
-	let ecc1 = new ECCM("1");
-	let ecc2 = new ECCM("2");
-	ecc1.generateSharedKey(ecc2.ECC);
+	import { serverKey } from '../store.js';
+	import { user } from '../store.js';
 
     let message = '';
 
-    async function updateBasket(message: string) {				
+    async function updateBasket(message: string, uuid: string) {
 		const res = await 
         fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/messages`, 
 			{
-				method: 'PUT',
+				method: 'GET',
                 body: JSON.stringify({ 
                     posts: [
                         {
                             message: message,
-                            timestamp: Date.now()
+                            timestamp: Date.now(),
+                            ownerID: uuid
                         }
                     ]
                 }),
@@ -31,15 +30,28 @@
         }
 	}
 	
+    async function getUser() {
+        return await user.get();
+    }
 
     async function handlePost() {
-        let encryptedMessage = ecc1.encrypt(message);
-
-        await updateBasket(encryptedMessage);
+        const userObject = await user.get();
+        const key = await serverKey.get();
+        const uuidECC = new ECCM(userObject.uuid);
+        uuidECC.generateSharedKey(key);
+        
+        const encryptedMessage = uuidECC.encrypt(message);
+        await updateBasket(encryptedMessage, userObject.uuid);
 	}
+
+    let userPromise = getUser();
 </script>
 
-<input bind:value={message} placeholder="enter your message" style="height: 50px; width: 588px;"/>
-<button on:click|once={handlePost}>
-    Post Message
-</button>
+{#await userPromise then user}
+    {#if user !== null}
+        <input bind:value={message} placeholder="enter your message" style="height: 50px; width: 588px;"/>
+        <button on:click|once={handlePost}>
+            Post Message
+        </button>
+    {/if}
+{/await}
