@@ -2,6 +2,7 @@
 	import Post from "./components/Post.svelte";
 	import NewPost from "./components/NewPost.svelte";
 	import Spinner from "./components/Spinner.svelte";
+	import Nav from "./components/Nav.svelte";
 	
 	let posts = [];
 
@@ -29,6 +30,10 @@
 	let promise = getBasket();
 </script>
 
+
+<header>
+	<Nav />
+</header>
 <main>
 	<NewPost />
 
@@ -36,14 +41,9 @@
 		<Spinner/>
 	{:then}
 		{#each posts.reverse() as post}
-			<Post message={post.message} time={post.timestamp}/>
+			<Post message={post.message} time={post.timestamp} postOwnerID={post.ownerID}/>
 		{/each}
 	{:catch error}
 		<p style="color: red">{error}</p>
 	{/await}
 </main>
-
-
-<style>
-
-</style>
