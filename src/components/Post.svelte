@@ -8,6 +8,7 @@
     export let time: string;
     export let postOwnerID: string;
     const userObject = async () => {return await user.get();  }
+    let postEncrypted = true;
 
 
     const friendRes = async () => { const result = await
@@ -21,28 +22,25 @@
       return await result.json();
     }
 
-    let postEncrypted = true;
-
     async function decryptMessage() {
 
         if (userObject) {
             if (userObject.uuid === postOwnerID) {
-                let key = await serverKey.get();  
-                console.log(key)
-
+                let key = await serverKey.get();
                 const uuidECC = new ECCM(userObject.uuid);
                 uuidECC.generateSharedKey(key);
                 postEncrypted = false;
                 return uuidECC.decrypt(message);
-            } else {
-                if (userObject.friends[postOwnerID]) {
-                    const key = userObject.friends[postOwnerID];
-                    const uuidECC = new ECCM(userObject.uuid);
-                    uuidECC.generateSharedKey(key);
-                    postEncrypted = false;
-                    return uuidECC.decrypt(message);
-                }
+            } else if (userObject.friends[postOwnerID] !== undefined) {
+                console.log("here I am");
+                console.log(userObject.friends[postOwnerID]);
+                const key = userObject.friends[postOwnerID];
+                const uuidECC = new ECCM(userObject.uuid);
+                uuidECC.generateSharedKey(key);
+                postEncrypted = false;
+                return uuidECC.decrypt(message);
             }
+
             return "Unable to decrypt this message, request access from post owner to view.";
         }
     }
