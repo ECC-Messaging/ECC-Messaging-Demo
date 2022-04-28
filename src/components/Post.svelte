@@ -25,7 +25,10 @@
     async function decryptMessage() {
 
         if (userObject) {
+            console.log("userObject" + userObject.uuid)
+            console.log("postOwnerID" + postOwnerID)
             if (userObject.uuid === postOwnerID) {
+                console.log("first");
                 let key = await serverKey.get();
                 const uuidECC = new ECCM(userObject.uuid);
                 uuidECC.generateSharedKey(key);
