@@ -6,11 +6,11 @@
     let message = '';
 
     async function updateBasket(message: string, uuid: string) {
-		const res = await 
-        fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/messages`, 
+		const res = await
+        fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/messages`,
 			{
-				method: 'GET',
-                body: JSON.stringify({ 
+				method: 'PUT',
+                body: JSON.stringify({
                     posts: [
                         {
                             message: message,
@@ -29,7 +29,7 @@
             throw new Error("Whoops, something went wrong with your post!");
         }
 	}
-	
+
     async function getUser() {
         return await user.get();
     }
@@ -39,7 +39,7 @@
         const key = await serverKey.get();
         const uuidECC = new ECCM(userObject.uuid);
         uuidECC.generateSharedKey(key);
-        
+
         const encryptedMessage = uuidECC.encrypt(message);
         await updateBasket(encryptedMessage, userObject.uuid);
 	}
