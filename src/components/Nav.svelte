@@ -1,6 +1,6 @@
 <script lang="ts">
     import ECCM from 'ecc-messaging-scheme-package';
-    import GithubLogin from "svelte-github-login";
+    import GithubLogin from 'svelte-github-login';
 	import { serverKey } from '../store.js';
 	import { user } from '../store.js';
 
