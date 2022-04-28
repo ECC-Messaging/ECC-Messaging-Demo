@@ -81,11 +81,6 @@
     }
 
     let decryptPromise = decryptMessage();
-    let friendPromise = null;
-
-    function tryFriendship() {
-        friendPromise = requestAccess();
-    }
 </script>
 
 
@@ -95,12 +90,7 @@
             <div class="post-footer">
                 <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
                 {#if postEncrypted}
-                    <button on:click|once={tryFriendship}>Request Access</button>
-                {/if}
-                {#if friendPromise !== null}
-                    {#await friendPromise}
-                        <p>Trying to become friends...</p>
-                    {/await}
+                    <button on:click|once={requestAccess}>Request Access</button>
                 {/if}
             </div>
     {:catch error}
