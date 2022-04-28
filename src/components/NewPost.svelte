@@ -2,6 +2,8 @@
 	import ECCM from 'ecc-messaging-scheme-package';
 	import { serverKey } from '../store.js';
 	import { user } from '../store.js';
+	import Cookies from "js-cookie";
+
 
     let message = '';
 
