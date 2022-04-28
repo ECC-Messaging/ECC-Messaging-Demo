@@ -7,16 +7,35 @@
 	export let message: string;
     export let time: string;
     export let postOwnerID: string;
+    const key = async () => {return await serverKey.get();  }
+
+
+
+    const friendRes =async () => { const result = await
+      fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return await result.json();
+    }
+
+
+
 
     let postEncrypted = true;
 
+
+
     async function decryptMessage() {
         const userObject = await user.get();
-        
+
         if (userObject) {
             if (userObject.uuid === postOwnerID) {
 
-                const key = await serverKey.get();
+
                 const uuidECC = new ECCM(userObject.uuid);
                 uuidECC.generateSharedKey(key);
                 postEncrypted = false;
@@ -37,25 +56,17 @@
     async function requestAccess() {
         const userObject = await user.get();
 
-        const friendRes = await 
-			fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`, 
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-		const json = await friendRes.json();
+
 		if (friendRes.ok) {
 			async () => {
                 const uuid: string = userObject.uuid;
 				let friendkey: string = json[postOwnerID].pub;
 
-                const res = await 
-                fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`, 
+                const res = await
+                fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
                     {
                         method: 'PUT',
-                        body: JSON.stringify({ 
+                        body: JSON.stringify({
                             [uuid]:
                             {
                                 friends: {
