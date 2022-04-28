@@ -92,10 +92,10 @@
 <blockquote>
     {#await decryptPromise then decryptedMessage}
             <h4>{decryptedMessage}</h4>
-            <div>
+            <div class="post-footer">
                 <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
                 {#if postEncrypted}
-                    <button on:click={tryFriendship}>Request Access</button>
+                    <button on:click|once={tryFriendship}>Request Access</button>
                 {/if}
                 {#if friendPromise !== null}
                     {#await friendPromise}
@@ -107,3 +107,10 @@
         <p style="color: red">{error}</p>
     {/await}
 </blockquote>
+
+<style>
+    .post-footer {
+        display: flex;
+        justify-content: space-evenly;
+    }
+</style>
