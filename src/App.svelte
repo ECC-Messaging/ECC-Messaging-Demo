@@ -31,7 +31,7 @@
 </script>
 
 
-<header>
+<header style="height: 90px;">
 	<Nav />
 </header>
 <main>
