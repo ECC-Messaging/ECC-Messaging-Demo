@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ECCM from 'ecc-messaging-scheme-package';
 	import { serverKey } from '../store.js';
-	import { user } from '../store.js';
+	import { users } from '../store.js';
 	import Cookies from "js-cookie";
 
 
@@ -33,11 +33,11 @@
 	}
 
     async function getUser() {
-        return await user.get();
+        return await users.get();
     }
 
     async function handlePost() {
-        const userObject = await user.get();
+        const userObject = await users.get();
         const key = await serverKey.get();
         const uuidECC = new ECCM(userObject.uuid);
         uuidECC.generateSharedKey(key);
