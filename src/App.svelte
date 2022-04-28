@@ -36,7 +36,6 @@
 
     async function generateSharedKeyWithUser() {
         const key = await serverKey.get();
-		console.log(decode(key.x));
         const uuidECC = new ECCM(uuid);
         uuidECC.generateSharedKey(key);
 		return uuidECC;
@@ -52,7 +51,7 @@
 					method: 'PUT',
 					body: JSON.stringify({
 						[uuid]: {
-							pub: key,
+							pub: {x: `${key['x']}n`, y:`${key['y']}n`},
 							friends: [
 								
 							]

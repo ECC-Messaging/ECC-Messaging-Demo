@@ -1,4 +1,5 @@
 import { asyncable } from "svelte-asyncable";
+import * as ecc_math from "simple-js-ec-math";
 
 export const user = asyncable(fetchUsers, null);
 async function fetchUsers() {
@@ -12,14 +13,7 @@ async function fetchUsers() {
     }
   );
   const json = await res.json();
-  if (res.ok) {
-    setTimeout(() => {
-      return json;
-    }, 0 * Math.random());
-  } else {
-    throw new Error("whoops");
-  }
-  return await res.json();
+  return json;
 }
 
 export const serverKey = asyncable(fetchKeys, null);
@@ -33,5 +27,8 @@ async function fetchKeys() {
       }
     }
   );
-  return await res.json();
+
+  let json = await res.json();
+  let point = new ecc_math.ModPoint(eval(json.x), eval(json.y));
+  return point;
 }
