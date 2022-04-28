@@ -1,7 +1,7 @@
 import { asyncable } from "svelte-asyncable";
 import * as ecc_math from "simple-js-ec-math";
 
-export const user = asyncable(fetchUsers, null);
+export const users = asyncable(fetchUsers, null);
 async function fetchUsers() {
   const res = await fetch(
     `https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,

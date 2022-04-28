@@ -1,44 +1,35 @@
 <script lang="ts">
+	import Cookies from "js-cookie";
     import Time from "svelte-time";
 	import ECCM from 'ecc-messaging-scheme-package';
-	import { user } from '../store.js';
+	import { users } from '../store.js';
 	import { serverKey } from '../store.js';
 
 	export let message: string;
     export let time: string;
     export let postOwnerID: string;
-    const userObject = async () => {return await user.get();  }
+    const uuid: string = Cookies.get("uuid_ecc");
+
     let postEncrypted = true;
 
-
-    const friendRes = async () => { const result = await
-      fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      return await result.json();
-    }
-
     async function decryptMessage() {
+        const usersObject = await users.get();
 
-        if (userObject) {
-            console.log("userObject" + userObject.uuid)
+        if (usersObject !== undefined) {
+            console.log("usersObject" + usersObject)
             console.log("postOwnerID" + postOwnerID)
-            if (userObject.uuid === postOwnerID) {
+            if (usersObject[uuid] === postOwnerID) {
                 console.log("first");
                 let key = await serverKey.get();
-                const uuidECC = new ECCM(userObject.uuid);
+                const uuidECC = new ECCM(usersObject[uuid]);
                 uuidECC.generateSharedKey(key);
                 postEncrypted = false;
                 return uuidECC.decrypt(message);
-            } else if (userObject.friends[postOwnerID] !== undefined) {
+            } else if (usersObject.friends.postOwnerID !== undefined) {
                 console.log("here I am");
-                console.log(userObject.friends[postOwnerID]);
-                const key = userObject.friends[postOwnerID];
-                const uuidECC = new ECCM(userObject.uuid);
+                console.log(usersObject.friends.postOwnerID);
+                const key = usersObject.friends.postOwnerID;
+                const uuidECC = new ECCM(usersObject[uuid]);
                 uuidECC.generateSharedKey(key);
                 postEncrypted = false;
                 return uuidECC.decrypt(message);
@@ -49,20 +40,19 @@
     }
 
     async function requestAccess() {
-        const userObject = await user.get();
+        const usersObject = await users.get();
 
-
-		if (friendRes.ok) {
+		if (usersObject !== undefined) {
 			async () => {
-                const uuid: string = userObject.uuid;
-				let friendkey: string = json[postOwnerID].pub;
+                const user = usersObject[uuid];
+				let friendkey: string = user.postOwnerID;
 
                 const res = await
                 fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
                     {
                         method: 'PUT',
                         body: JSON.stringify({
-                            [uuid]:
+                            [user]:
                             {
                                 friends: {
                                     postOwnerID: friendkey
@@ -78,8 +68,6 @@
                 } else {
                     throw new Error("Whoops, could not request friend access.");
                 }
-
-				return true;
 			}
 		} else {
 			throw new Error("Whoops, could not get friend key.");
