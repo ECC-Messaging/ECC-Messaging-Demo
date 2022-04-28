@@ -7,7 +7,6 @@
 	export let message: string;
     export let time: string;
     export let postOwnerID: string;
-    const key = async () => {return await serverKey.get();  }
     const userObject = async () => {return await user.get();  }
 
 
@@ -28,6 +27,8 @@
 
         if (userObject) {
             if (userObject.uuid === postOwnerID) {
+                let key = await serverKey.get();  
+                console.log(key)
 
                 const uuidECC = new ECCM(userObject.uuid);
                 uuidECC.generateSharedKey(key);
