@@ -4,7 +4,7 @@ import * as ecc_math from "simple-js-ec-math";
 export const users = asyncable(fetchUsers, null);
 async function fetchUsers() {
   const res = await fetch(
-    `https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
+    `https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/users`,
     {
       method: "GET",
       headers: {
@@ -19,7 +19,7 @@ async function fetchUsers() {
 export const serverKey = asyncable(fetchKeys, null);
 async function fetchKeys() {
   const res = await fetch(
-    `https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/serverkey`,
+    `https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/serverkey`,
     {
       method: "GET",
       headers: {
