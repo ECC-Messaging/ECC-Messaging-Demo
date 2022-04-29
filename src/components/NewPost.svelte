@@ -3,15 +3,14 @@
 	import { serverKey } from '../store.js';
 	import { users } from '../store.js';
 	import Cookies from "js-cookie";
-    const uuid: string = Cookies.get("uuid_ecc");
-
 
     let message = '';
 
     async function updateBasket(message: string, uuid: string) {
 		const res = await
-        fetch(`https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/messages`,
+		        fetch(`https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/messages`,
 			{
+
 				method: 'PUT',
                 body: JSON.stringify({
                     posts: [
@@ -38,12 +37,16 @@
     }
 
     async function handlePost() {
-        const key = await serverKey.get();
+				const uuid = Cookies.get("uuid_ecc")
+        const key:string = await serverKey.get();
         const uuidECC = new ECCM(uuid);
+				uuidECC.ECC.loadPublicKey();
+
         uuidECC.generateSharedKey(key);
+				uuidECC.ECC.generateSharedKey(key);
 
         const encryptedMessage = uuidECC.encrypt(message);
-        await updateBasket(encryptedMessage, uuid);
+        await updateBasket(encryptedMessage,uuid);
 	}
 
     let userPromise = getUser();
@@ -52,7 +55,7 @@
 {#await userPromise then user}
     {#if user !== null}
         <input bind:value={message} placeholder="enter your message" style="height: 50px; width: 588px;"/>
-        <button on:click={handlePost}>
+        <button on:click|once={handlePost}>
             Post Message
         </button>
     {/if}

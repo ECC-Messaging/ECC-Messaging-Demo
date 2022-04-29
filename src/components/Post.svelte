@@ -18,13 +18,13 @@
         const user = usersObject[uuid];
 
         if (usersObject !== undefined && user !== undefined) {
-            
+
             if (uuid === postOwnerID) {
-                let key = await serverKey.get();
-                const uuidECC = new ECCM(uuid);
-                uuidECC.generateSharedKey(key);
+                const jsonK = usersObject[postOwnerID].shared;
+                let key = new ecc_math.ModPoint(eval(jsonK.x), eval(jsonK.y));
+                const uuidECC = new ECCM("");
                 postEncrypted = false;
-                return uuidECC.decrypt(message);
+                return uuidECC.decryptWKey(key['x'], message);
             } else if (user.friends.includes(postOwnerID)) {
                 const jsonK = usersObject[postOwnerID].shared;
                 let key = new ecc_math.ModPoint(eval(jsonK.x), eval(jsonK.y));

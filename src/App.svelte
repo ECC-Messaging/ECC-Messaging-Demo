@@ -4,16 +4,16 @@
 	import NewPost from "./components/NewPost.svelte";
 	import Spinner from "./components/Spinner.svelte";
 	import Cookies from "js-cookie";
-	import { serverKey } from './store.js';	
+	import { serverKey } from './store.js';
 
-	
+
 	let posts = [];
     let uuid: string;
 	let cookieID = Cookies.get("uuid_ecc");
 
-	async function getBasket() {				
-		const res = await 
-			fetch(`https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/messages`, 
+	async function getBasket() {
+		const res = await
+			fetch(`https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/messages`,
 			{
 				method: 'GET',
 				headers: {
@@ -53,7 +53,7 @@
 						[uuid]: {
 							shared: {x: `${key['x']}n`, y:`${key['y']}n`},
 							friends: [
-								
+
 							]
 						}
 					}),
