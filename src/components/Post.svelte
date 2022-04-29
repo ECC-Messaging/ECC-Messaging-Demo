@@ -14,25 +14,21 @@
 
     async function decryptMessage() {
         const usersObject = await users.get();
+        const user = usersObject[uuid];
 
-        if (usersObject !== undefined) {
-            console.log("usersObject" + usersObject)
-            console.log("postOwnerID" + postOwnerID)
-            if (usersObject[uuid] === postOwnerID) {
-                console.log("first");
+        if (usersObject !== undefined && user !== undefined) {
+            
+            if (uuid === postOwnerID) {
                 let key = await serverKey.get();
-                const uuidECC = new ECCM(usersObject[uuid]);
+                const uuidECC = new ECCM(uuid);
                 uuidECC.generateSharedKey(key);
                 postEncrypted = false;
                 return uuidECC.decrypt(message);
-            } else if (usersObject.friends.postOwnerID !== undefined) {
-                console.log("here I am");
-                console.log(usersObject.friends.postOwnerID);
-                const key = usersObject.friends.postOwnerID;
-                const uuidECC = new ECCM(usersObject[uuid]);
-                uuidECC.generateSharedKey(key);
+            } else if (user.friends.includes(postOwnerID)) {
+                const key = usersObject[postOwnerID].shared;
+                const uuidECC = new ECCM("");
                 postEncrypted = false;
-                return uuidECC.decrypt(message);
+                return uuidECC.decryptWKey(key, message);
             }
 
             return "Unable to decrypt this message, request access from post owner to view.";
@@ -41,36 +37,30 @@
 
     async function requestAccess() {
         const usersObject = await users.get();
+        const user = usersObject[uuid];
 
-		if (usersObject !== undefined) {
-			async () => {
-                const user = usersObject[uuid];
-				let friendkey: string = user.postOwnerID;
-
-                const res = await
+		if (usersObject !== undefined && user !== undefined) {
+            const res = await
                 fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
-                    {
-                        method: 'PUT',
-                        body: JSON.stringify({
-                            [user]:
-                            {
-                                friends: {
-                                    postOwnerID: friendkey
-                                }
-                            }
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
+                {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        [uuid]:
+                        {
+                            friends: [
+                                postOwnerID
+                            ]
                         }
-                    });
-                if (res.ok) {
-                    location.reload(true);
-                } else {
-                    throw new Error("Whoops, could not request friend access.");
-                }
-			}
-		} else {
-			throw new Error("Whoops, could not get friend key.");
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            if (res.ok) {
+                location.reload(true);
+            } else {
+                throw new Error("Whoops, could not request friend access.");
+            }
 		}
     }
 

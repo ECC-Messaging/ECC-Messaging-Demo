@@ -44,14 +44,14 @@
     async function handleLogin() {
         if (Cookies.get("uuid_ecc") === undefined) {
 			let eccInstance = await generateSharedKeyWithUser();
-			let key = eccInstance.ECC.getPublicKey();
+			let key = eccInstance.ECC.getSharedKey();
 			const res = await
 				fetch(`https://getpantry.cloud/apiv1/pantry/3140d297-fd8e-4581-90f9-c879e38e26dd/basket/users`,
 				{
 					method: 'PUT',
 					body: JSON.stringify({
 						[uuid]: {
-							pub: {x: `${key['x']}n`, y:`${key['y']}n`},
+							shared: {x: `${key['x']}n`, y:`${key['y']}n`},
 							friends: [
 								
 							]
