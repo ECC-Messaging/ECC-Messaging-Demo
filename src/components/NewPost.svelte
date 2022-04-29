@@ -3,6 +3,7 @@
 	import { serverKey } from '../store.js';
 	import { users } from '../store.js';
 	import Cookies from "js-cookie";
+    const uuid: string = Cookies.get("uuid_ecc");
 
 
     let message = '';
@@ -37,13 +38,12 @@
     }
 
     async function handlePost() {
-        const userObject = await users.get();
         const key = await serverKey.get();
-        const uuidECC = new ECCM(userObject.uuid);
+        const uuidECC = new ECCM(uuid);
         uuidECC.generateSharedKey(key);
 
         const encryptedMessage = uuidECC.encrypt(message);
-        await updateBasket(encryptedMessage, userObject.uuid);
+        await updateBasket(encryptedMessage, uuid);
 	}
 
     let userPromise = getUser();
@@ -52,7 +52,7 @@
 {#await userPromise then user}
     {#if user !== null}
         <input bind:value={message} placeholder="enter your message" style="height: 50px; width: 588px;"/>
-        <button on:click|once={handlePost}>
+        <button on:click={handlePost}>
             Post Message
         </button>
     {/if}

@@ -35,9 +35,9 @@
 	let promise = getBasket();
 
     async function generateSharedKeyWithUser() {
-        const key = await serverKey.get();
-        const uuidECC = new ECCM(uuid);
-        uuidECC.generateSharedKey(key);
+		const key = await serverKey.get();
+		const uuidECC = new ECCM(uuid);
+		uuidECC.generateSharedKey(key);
 		return uuidECC;
     }
 

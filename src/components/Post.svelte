@@ -30,7 +30,7 @@
                 let key = new ecc_math.ModPoint(eval(jsonK.x), eval(jsonK.y));
                 const uuidECC = new ECCM("");
                 postEncrypted = false;
-                return uuidECC.decryptWKey(key, message);
+                return uuidECC.decryptWKey(key['x'], message);
             }
 
             return "Unable to decrypt this message, request access from post owner to view.";
@@ -72,15 +72,13 @@
 
 <blockquote>
     {#await decryptPromise then decryptedMessage}
-            <h4>{decryptedMessage}</h4>
-            <div class="post-footer">
-                <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
-                {#if postEncrypted}
-                    <button on:click|once={requestAccess}>Request Access</button>
-                {/if}
-            </div>
-    {:catch error}
-        <p style="color: red">{error}</p>
+        <h4>{decryptedMessage}</h4>
+        <div class="post-footer">
+            <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
+            {#if postEncrypted}
+                <button on:click|once={requestAccess}>Request Access</button>
+            {/if}
+        </div>
     {/await}
 </blockquote>
 
