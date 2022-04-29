@@ -4,6 +4,7 @@
 	import ECCM from 'ecc-messaging-scheme-package';
 	import { users } from '../store.js';
 	import { serverKey } from '../store.js';
+    import * as ecc_math from "simple-js-ec-math";
 
 	export let message: string;
     export let time: string;
@@ -25,7 +26,8 @@
                 postEncrypted = false;
                 return uuidECC.decrypt(message);
             } else if (user.friends.includes(postOwnerID)) {
-                const key = usersObject[postOwnerID].shared;
+                const jsonK = usersObject[postOwnerID].shared;
+                let key = new ecc_math.ModPoint(eval(jsonK.x), eval(jsonK.y));
                 const uuidECC = new ECCM("");
                 postEncrypted = false;
                 return uuidECC.decryptWKey(key, message);
