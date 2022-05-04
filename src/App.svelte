@@ -62,8 +62,8 @@
 					}
 				});
 			if (res.ok) {
+				cookieID = uuid;
 				Cookies.set("uuid_ecc", uuid, { expires: 365 });
-				location.reload(true);
 			} else {
 				throw new Error("Whoops, could not login!");
 			}
@@ -73,23 +73,27 @@
 </script>
 
 <main>
-	{#if cookieID === undefined}
-		<h5>Login to post</h5>
-		<input bind:value={uuid} placeholder="enter your username" style="height: 50px; width: 588px;"/>
-		<button on:click|once={handleLogin}>
-			Sign in
-		</button>
-	{:else}
-		<NewPost />
+	{#key cookieID}
+		{#if cookieID === undefined}
+			<h5>Login to post</h5>
+			<input bind:value={uuid} placeholder="enter your username" style="height: 50px; width: 588px;"/>
+			<button on:click|once={handleLogin}>
+				Sign in
+			</button>
+		{:else}
+			{#key posts}
+				<NewPost />
 
-		{#await promise}
-			<Spinner/>
-		{:then}
-			{#each posts.reverse() as post}
-				<Post message={post.message} time={post.timestamp} postOwnerID={post.ownerID}/>
-			{/each}
-		{:catch error}
-			<p style="color: red">{error}</p>
-		{/await}
-	{/if}
+				{#await promise}
+					<Spinner/>
+				{:then}
+					{#each posts.reverse() as post}
+						<Post message={post.message} time={post.timestamp} postOwnerID={post.ownerID}/>
+					{/each}
+				{:catch error}
+					<p style="color: red">{error}</p>
+				{/await}
+			{/key}
+		{/if}
+	{/key}
 </main>
