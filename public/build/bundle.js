@@ -3041,16 +3041,22 @@ var app = (function (crypto) {
     	return block;
     }
 
-    // (60:49)          <h4>{decryptedMessage}
+    // (60:49)          <div class="horizontal-flex">             <h4>{decryptedMessage}
     function create_then_block$1(ctx) {
+    	let div0;
     	let h4;
     	let t0_value = /*decryptedMessage*/ ctx[9] + "";
     	let t0;
     	let t1;
-    	let div;
-    	let time_1;
     	let t2;
+    	let div1;
+    	let p;
+    	let t3;
+    	let t4;
+    	let t5;
+    	let time_1;
     	let current;
+    	let if_block = /*postEncrypted*/ ctx[2] && create_if_block$1(ctx);
 
     	time_1 = new Time({
     			props: {
@@ -3060,48 +3066,60 @@ var app = (function (crypto) {
     			$$inline: true
     		});
 
-    	let if_block = /*postEncrypted*/ ctx[1] && create_if_block$1(ctx);
-
     	const block = {
     		c: function create() {
+    			div0 = element("div");
     			h4 = element("h4");
     			t0 = text(t0_value);
     			t1 = space();
-    			div = element("div");
-    			create_component(time_1.$$.fragment);
-    			t2 = space();
     			if (if_block) if_block.c();
-    			add_location(h4, file$3, 60, 8, 2119);
-    			attr_dev(div, "class", "post-footer svelte-5lgxi2");
-    			add_location(div, file$3, 61, 8, 2155);
+    			t2 = space();
+    			div1 = element("div");
+    			p = element("p");
+    			t3 = text("User ");
+    			t4 = text(/*postOwnerID*/ ctx[1]);
+    			t5 = space();
+    			create_component(time_1.$$.fragment);
+    			add_location(h4, file$3, 61, 12, 2161);
+    			attr_dev(div0, "class", "horizontal-flex svelte-b6kbm8");
+    			add_location(div0, file$3, 60, 8, 2119);
+    			add_location(p, file$3, 67, 12, 2382);
+    			attr_dev(div1, "class", "horizontal-flex svelte-b6kbm8");
+    			add_location(div1, file$3, 66, 8, 2340);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, h4, anchor);
+    			insert_dev(target, div0, anchor);
+    			append_dev(div0, h4);
     			append_dev(h4, t0);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, div, anchor);
-    			mount_component(time_1, div, null);
-    			append_dev(div, t2);
-    			if (if_block) if_block.m(div, null);
+    			append_dev(div0, t1);
+    			if (if_block) if_block.m(div0, null);
+    			insert_dev(target, t2, anchor);
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, p);
+    			append_dev(p, t3);
+    			append_dev(p, t4);
+    			append_dev(div1, t5);
+    			mount_component(time_1, div1, null);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
-    			const time_1_changes = {};
-    			if (dirty & /*time*/ 1) time_1_changes.timestamp = /*time*/ ctx[0];
-    			time_1.$set(time_1_changes);
-
-    			if (/*postEncrypted*/ ctx[1]) {
+    			if (/*postEncrypted*/ ctx[2]) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
     					if_block = create_if_block$1(ctx);
     					if_block.c();
-    					if_block.m(div, null);
+    					if_block.m(div0, null);
     				}
     			} else if (if_block) {
     				if_block.d(1);
     				if_block = null;
     			}
+
+    			if (!current || dirty & /*postOwnerID*/ 2) set_data_dev(t4, /*postOwnerID*/ ctx[1]);
+    			const time_1_changes = {};
+    			if (dirty & /*time*/ 1) time_1_changes.timestamp = /*time*/ ctx[0];
+    			time_1.$set(time_1_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
@@ -3113,11 +3131,11 @@ var app = (function (crypto) {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(h4);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(div);
-    			destroy_component(time_1);
+    			if (detaching) detach_dev(div0);
     			if (if_block) if_block.d();
+    			if (detaching) detach_dev(t2);
+    			if (detaching) detach_dev(div1);
+    			destroy_component(time_1);
     		}
     	};
 
@@ -3125,14 +3143,14 @@ var app = (function (crypto) {
     		block,
     		id: create_then_block$1.name,
     		type: "then",
-    		source: "(60:49)          <h4>{decryptedMessage}",
+    		source: "(60:49)          <div class=\\\"horizontal-flex\\\">             <h4>{decryptedMessage}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (64:12) {#if postEncrypted}
+    // (63:12) {#if postEncrypted}
     function create_if_block$1(ctx) {
     	let button;
     	let mounted;
@@ -3142,13 +3160,13 @@ var app = (function (crypto) {
     		c: function create() {
     			button = element("button");
     			button.textContent = "Request Access";
-    			add_location(button, file$3, 64, 16, 2300);
+    			add_location(button, file$3, 63, 16, 2237);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*requestAccess*/ ctx[2], { once: true }, false, false);
+    				dispose = listen_dev(button, "click", /*requestAccess*/ ctx[3], { once: true }, false, false);
     				mounted = true;
     			}
     		},
@@ -3164,7 +3182,7 @@ var app = (function (crypto) {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(64:12) {#if postEncrypted}",
+    		source: "(63:12) {#if postEncrypted}",
     		ctx
     	});
 
@@ -3209,7 +3227,7 @@ var app = (function (crypto) {
     		blocks: [,,,]
     	};
 
-    	handle_promise(/*decryptPromise*/ ctx[3], info);
+    	handle_promise(/*decryptPromise*/ ctx[4], info);
 
     	const block = {
     		c: function create() {
@@ -3281,13 +3299,13 @@ var app = (function (crypto) {
     				const jsonK = usersObject[postOwnerID].shared;
     				let key = new src.ModPoint(eval(jsonK.x), eval(jsonK.y));
     				const uuidECC = new _default("");
-    				$$invalidate(1, postEncrypted = false);
+    				$$invalidate(2, postEncrypted = false);
     				return uuidECC.decryptWKey(key['x'], message);
     			} else if (user.friends.includes(postOwnerID)) {
     				const jsonK = usersObject[postOwnerID].shared;
     				let key = new src.ModPoint(eval(jsonK.x), eval(jsonK.y));
     				const uuidECC = new _default("");
-    				$$invalidate(1, postEncrypted = false);
+    				$$invalidate(2, postEncrypted = false);
     				return uuidECC.decryptWKey(key['x'], message);
     			}
 
@@ -3321,9 +3339,9 @@ var app = (function (crypto) {
     	});
 
     	$$self.$$set = $$props => {
-    		if ('message' in $$props) $$invalidate(4, message = $$props.message);
+    		if ('message' in $$props) $$invalidate(5, message = $$props.message);
     		if ('time' in $$props) $$invalidate(0, time = $$props.time);
-    		if ('postOwnerID' in $$props) $$invalidate(5, postOwnerID = $$props.postOwnerID);
+    		if ('postOwnerID' in $$props) $$invalidate(1, postOwnerID = $$props.postOwnerID);
     		if ('usersObject' in $$props) $$invalidate(6, usersObject = $$props.usersObject);
     	};
 
@@ -3344,12 +3362,12 @@ var app = (function (crypto) {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('message' in $$props) $$invalidate(4, message = $$props.message);
+    		if ('message' in $$props) $$invalidate(5, message = $$props.message);
     		if ('time' in $$props) $$invalidate(0, time = $$props.time);
-    		if ('postOwnerID' in $$props) $$invalidate(5, postOwnerID = $$props.postOwnerID);
+    		if ('postOwnerID' in $$props) $$invalidate(1, postOwnerID = $$props.postOwnerID);
     		if ('usersObject' in $$props) $$invalidate(6, usersObject = $$props.usersObject);
-    		if ('postEncrypted' in $$props) $$invalidate(1, postEncrypted = $$props.postEncrypted);
-    		if ('decryptPromise' in $$props) $$invalidate(3, decryptPromise = $$props.decryptPromise);
+    		if ('postEncrypted' in $$props) $$invalidate(2, postEncrypted = $$props.postEncrypted);
+    		if ('decryptPromise' in $$props) $$invalidate(4, decryptPromise = $$props.decryptPromise);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -3358,11 +3376,11 @@ var app = (function (crypto) {
 
     	return [
     		time,
+    		postOwnerID,
     		postEncrypted,
     		requestAccess,
     		decryptPromise,
     		message,
-    		postOwnerID,
     		usersObject
     	];
     }
@@ -3372,9 +3390,9 @@ var app = (function (crypto) {
     		super(options);
 
     		init$1(this, options, instance$3, create_fragment$3, safe_not_equal, {
-    			message: 4,
+    			message: 5,
     			time: 0,
-    			postOwnerID: 5,
+    			postOwnerID: 1,
     			usersObject: 6
     		});
 
@@ -3388,7 +3406,7 @@ var app = (function (crypto) {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*message*/ ctx[4] === undefined && !('message' in props)) {
+    		if (/*message*/ ctx[5] === undefined && !('message' in props)) {
     			console.warn("<Post> was created without expected prop 'message'");
     		}
 
@@ -3396,7 +3414,7 @@ var app = (function (crypto) {
     			console.warn("<Post> was created without expected prop 'time'");
     		}
 
-    		if (/*postOwnerID*/ ctx[5] === undefined && !('postOwnerID' in props)) {
+    		if (/*postOwnerID*/ ctx[1] === undefined && !('postOwnerID' in props)) {
     			console.warn("<Post> was created without expected prop 'postOwnerID'");
     		}
 
