@@ -2,19 +2,17 @@
 	import Cookies from "js-cookie";
     import Time from "svelte-time";
 	import ECCM from 'ecc-messaging-scheme-package';
-	import { users } from '../store.js';
-	import { serverKey } from '../store.js';
     import * as ecc_math from "simple-js-ec-math";
 
 	export let message: string;
     export let time: string;
     export let postOwnerID: string;
+    export let usersObject: JSON;
     const uuid: string = Cookies.get("uuid_ecc");
 
     let postEncrypted = true;
 
     async function decryptMessage() {
-        const usersObject = await users.get();
         const user = usersObject[uuid];
 
         if (usersObject !== undefined && user !== undefined) {
@@ -38,7 +36,6 @@
     }
 
     async function requestAccess() {
-        const usersObject = await users.get();
         const user = usersObject[uuid];
 
 		if (usersObject !== undefined && user !== undefined) {

@@ -4,14 +4,16 @@
 	import NewPost from "./components/NewPost.svelte";
 	import Spinner from "./components/Spinner.svelte";
 	import Cookies from "js-cookie";
-	import { serverKey } from './store.js';
+	import { serverKey, users } from './store.js';
 
 
 	let posts = [];
     let uuid: string;
 	let cookieID = Cookies.get("uuid_ecc");
+	let usersObject;
 
 	async function getBasket() {
+		usersObject = await users.get();
 		const res = await
 			fetch(`https://getpantry.cloud/apiv1/pantry/149eae50-eb1c-4667-9524-532c4e4afc62/basket/messages`,
 			{
@@ -81,14 +83,13 @@
 				Sign in
 			</button>
 		{:else}
+			<NewPost bind:posts={posts} />
 			{#key posts}
-				<NewPost />
-
 				{#await promise}
 					<Spinner/>
 				{:then}
 					{#each posts.reverse() as post}
-						<Post message={post.message} time={post.timestamp} postOwnerID={post.ownerID}/>
+						<Post message={post.message} time={post.timestamp} postOwnerID={post.ownerID} {usersObject}/>
 					{/each}
 				{:catch error}
 					<p style="color: red">{error}</p>
