@@ -69,19 +69,23 @@
 
 <blockquote>
     {#await decryptPromise then decryptedMessage}
-        <h4>{decryptedMessage}</h4>
-        <div class="post-footer">
-            <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
+        <div class="horizontal-flex">
+            <h4>{decryptedMessage}</h4>
             {#if postEncrypted}
                 <button on:click|once={requestAccess}>Request Access</button>
             {/if}
+        </div>
+        <div class="horizontal-flex">
+            <p>{postOwnerID}</p>
+            <Time timestamp="{time}" format="MMMM D, YYYY @ h:mm a" />
         </div>
     {/await}
 </blockquote>
 
 <style>
-    .post-footer {
+    .horizontal-flex {
         display: flex;
         justify-content: space-evenly;
-    }
+        align-items: center;
+    }   
 </style>
