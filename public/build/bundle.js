@@ -3053,7 +3053,6 @@ var app = (function (crypto) {
     	let p;
     	let t3;
     	let t4;
-    	let t5;
     	let time_1;
     	let current;
     	let if_block = /*postEncrypted*/ ctx[2] && create_if_block$1(ctx);
@@ -3076,9 +3075,8 @@ var app = (function (crypto) {
     			t2 = space();
     			div1 = element("div");
     			p = element("p");
-    			t3 = text("User ");
-    			t4 = text(/*postOwnerID*/ ctx[1]);
-    			t5 = space();
+    			t3 = text(/*postOwnerID*/ ctx[1]);
+    			t4 = space();
     			create_component(time_1.$$.fragment);
     			add_location(h4, file$3, 61, 12, 2161);
     			attr_dev(div0, "class", "horizontal-flex svelte-b6kbm8");
@@ -3097,8 +3095,7 @@ var app = (function (crypto) {
     			insert_dev(target, div1, anchor);
     			append_dev(div1, p);
     			append_dev(p, t3);
-    			append_dev(p, t4);
-    			append_dev(div1, t5);
+    			append_dev(div1, t4);
     			mount_component(time_1, div1, null);
     			current = true;
     		},
@@ -3116,7 +3113,7 @@ var app = (function (crypto) {
     				if_block = null;
     			}
 
-    			if (!current || dirty & /*postOwnerID*/ 2) set_data_dev(t4, /*postOwnerID*/ ctx[1]);
+    			if (!current || dirty & /*postOwnerID*/ 2) set_data_dev(t3, /*postOwnerID*/ ctx[1]);
     			const time_1_changes = {};
     			if (dirty & /*time*/ 1) time_1_changes.timestamp = /*time*/ ctx[0];
     			time_1.$set(time_1_changes);
@@ -3943,7 +3940,7 @@ var app = (function (crypto) {
     	return child_ctx;
     }
 
-    // (72:2) {:else}
+    // (73:2) {:else}
     function create_else_block(ctx) {
     	let newpost;
     	let updating_posts;
@@ -4026,14 +4023,14 @@ var app = (function (crypto) {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(72:2) {:else}",
+    		source: "(73:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (66:2) {#if cookieID === undefined}
+    // (67:2) {#if cookieID === undefined}
     function create_if_block(ctx) {
     	let h5;
     	let t1;
@@ -4052,12 +4049,12 @@ var app = (function (crypto) {
     			t2 = space();
     			button = element("button");
     			button.textContent = "Sign in";
-    			add_location(h5, file, 66, 3, 2087);
+    			add_location(h5, file, 67, 3, 2123);
     			attr_dev(input, "placeholder", "enter your username");
     			set_style(input, "height", "50px");
     			set_style(input, "width", "588px");
-    			add_location(input, file, 67, 3, 2113);
-    			add_location(button, file, 68, 3, 2213);
+    			add_location(input, file, 68, 3, 2149);
+    			add_location(button, file, 69, 3, 2249);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h5, anchor);
@@ -4098,14 +4095,14 @@ var app = (function (crypto) {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(66:2) {#if cookieID === undefined}",
+    		source: "(67:2) {#if cookieID === undefined}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (81:4) {:catch error}
+    // (82:4) {:catch error}
     function create_catch_block(ctx) {
     	let p;
     	let t_value = /*error*/ ctx[13] + "";
@@ -4116,7 +4113,7 @@ var app = (function (crypto) {
     			p = element("p");
     			t = text(t_value);
     			set_style(p, "color", "red");
-    			add_location(p, file, 81, 5, 2558);
+    			add_location(p, file, 82, 5, 2594);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -4134,14 +4131,14 @@ var app = (function (crypto) {
     		block,
     		id: create_catch_block.name,
     		type: "catch",
-    		source: "(81:4) {:catch error}",
+    		source: "(82:4) {:catch error}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (77:4) {:then}
+    // (78:4) {:then}
     function create_then_block(ctx) {
     	let each_1_anchor;
     	let current;
@@ -4230,14 +4227,14 @@ var app = (function (crypto) {
     		block,
     		id: create_then_block.name,
     		type: "then",
-    		source: "(77:4) {:then}",
+    		source: "(78:4) {:then}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (78:5) {#each posts.reverse() as post}
+    // (79:5) {#each posts.reverse() as post}
     function create_each_block(ctx) {
     	let post;
     	let current;
@@ -4286,14 +4283,14 @@ var app = (function (crypto) {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(78:5) {#each posts.reverse() as post}",
+    		source: "(79:5) {#each posts.reverse() as post}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (75:20)       <Spinner/>     {:then}
+    // (76:20)       <Spinner/>     {:then}
     function create_pending_block(ctx) {
     	let spinner;
     	let current;
@@ -4326,14 +4323,14 @@ var app = (function (crypto) {
     		block,
     		id: create_pending_block.name,
     		type: "pending",
-    		source: "(75:20)       <Spinner/>     {:then}",
+    		source: "(76:20)       <Spinner/>     {:then}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (74:3) {#key posts}
+    // (75:3) {#key posts}
     function create_key_block_1(ctx) {
     	let await_block_anchor;
     	let current;
@@ -4393,14 +4390,14 @@ var app = (function (crypto) {
     		block,
     		id: create_key_block_1.name,
     		type: "key",
-    		source: "(74:3) {#key posts}",
+    		source: "(75:3) {#key posts}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (65:1) {#key cookieID}
+    // (66:1) {#key cookieID}
     function create_key_block(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -4473,7 +4470,7 @@ var app = (function (crypto) {
     		block,
     		id: create_key_block.name,
     		type: "key",
-    		source: "(65:1) {#key cookieID}",
+    		source: "(66:1) {#key cookieID}",
     		ctx
     	});
 
@@ -4490,7 +4487,7 @@ var app = (function (crypto) {
     		c: function create() {
     			main = element("main");
     			key_block.c();
-    			add_location(main, file, 63, 0, 2029);
+    			add_location(main, file, 64, 0, 2065);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4598,6 +4595,7 @@ var app = (function (crypto) {
     			if (res.ok) {
     				$$invalidate(2, cookieID = uuid);
     				api.set("uuid_ecc", uuid, { expires: 365 });
+    				location.reload(true);
     			} else {
     				throw new Error("Whoops, could not login!");
     			}

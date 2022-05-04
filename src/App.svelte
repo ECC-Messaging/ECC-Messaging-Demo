@@ -66,6 +66,7 @@
 			if (res.ok) {
 				cookieID = uuid;
 				Cookies.set("uuid_ecc", uuid, { expires: 365 });
+				location.reload(true);
 			} else {
 				throw new Error("Whoops, could not login!");
 			}
