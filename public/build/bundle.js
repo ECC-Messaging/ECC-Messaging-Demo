@@ -1021,7 +1021,9 @@ var app = (function (crypto) {
             this.loadPublicKey();
         }
         generatePrivateKey() {
-            this.privateKey = 378;
+            let min = 1;
+            let max = 1000;
+            this.privateKey = Math.floor(Math.random() * (max - min + 1) + min);
             //ALTERNATE OPTION
             // localStorage.setItem("lastname", "Smith");
             // console.log(localStorage.getItem("lastname"));
